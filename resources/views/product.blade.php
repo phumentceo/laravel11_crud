@@ -7,6 +7,19 @@
             <h3>Product List</h3>
             <a href="{{ route('product.create') }}" class=" btn btn-primary">new Product</a>
         </div>
+
+        @if (Session::has('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @elseif(Session::has('error'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -28,7 +41,7 @@
               <td>{{ $product->qty }}</td>
               <td>
                 <a href="{{ route('product.edit') }}" class="btn btn-primary btn-sm">Edit</a>
-                <a href="{{ route('product.destroy',$product->id) }}" class="btn btn-danger btn-sm">Delete</a>
+                <a href="{{ route('product.destroy',$product->id) }}" onclick="return confirm('Do you to delete this?')" class="btn btn-danger btn-sm">Delete</a>
               </td>
             </tr>
             @endforeach
